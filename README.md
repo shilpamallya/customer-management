@@ -90,3 +90,43 @@ The Customer Management mule project has been built by going through the Mulesof
 | Update a Customer | PUT      |    https://customer-management-api-v1.us-e2.cloudhub.io/customer-management/v1/customer/{id} |  ```{ "salutation": "Ms", "firstName": "Kathy", "lastName": "Seirra", "address": { "addressLine1": "556", "addressLine2": "Pike Street", "suburb": "Sydney", "postCode": "2000", "state": "NSW", "country": "Australia" } }```   |   ``` { "id": 3, "salutation": "Ms", "firstName": "Kathy", "lastName": "Seirra", "address": { "addressLine1": "556", "addressLine2": "Pike Street", "suburb": "Sydney", "postCode": "2000", "state": "NSW", "country": "Australia" } }```
 | Delete a Customer  | DELETE   |   https://customer-management-api-v1.us-e2.cloudhub.io/customer-management/v1/customer/{id}  |   |   ```{ "message": "Customer 3 has been successfully deleted." }```
 | Retrieve a Customer  | GET   |   https://customer-management-api-v1.us-e2.cloudhub.io/customer-management/v1/customers/{id}  |   |  ``` { "id": 3, "salutation": "Ms", "firstName": "Kathy", "lastName": "Seirra", "address": { "addressLine1": "556", "addressLine2": "Pike Street", "suburb": "Sydney", "postCode": "2000", "state": "NSW", "country": "Australia" } } ```
+
+
+### Snapshots
+
+#### HTTPS enabled API Console
+![1](https://user-images.githubusercontent.com/23097763/42412163-4b72e384-824a-11e8-895c-89dab37e96c3.png)
+
+#### Client Id Enforcement Policy
+![2](https://user-images.githubusercontent.com/23097763/42412164-4bbc00aa-824a-11e8-99a9-7e82ddb962d6.PNG)
+
+#### List all Customers
+![3](https://user-images.githubusercontent.com/23097763/42412165-4c00a322-824a-11e8-9761-1ee6c92f15b6.PNG)
+
+#### Create a new Customer
+![4](https://user-images.githubusercontent.com/23097763/42412166-4c33ef52-824a-11e8-871d-b975fa267f34.PNG)
+
+#### Update a Customer
+![5](https://user-images.githubusercontent.com/23097763/42412167-4c94b22e-824a-11e8-8f03-2e2a45ff9e08.PNG)
+
+#### Delete a Customer
+![6](https://user-images.githubusercontent.com/23097763/42412168-4d362ca8-824a-11e8-8412-27c4fdcff845.PNG)
+
+#### Retrieve a Customer
+![7](https://user-images.githubusercontent.com/23097763/42412169-4d6b3808-824a-11e8-8814-c33996b22399.PNG)
+
+#### 404 No Customers found
+![8](https://user-images.githubusercontent.com/23097763/42412170-4dc6f01c-824a-11e8-902c-59cdfb5dece9.PNG)
+
+#### 404 Customer Id does not exist
+![9](https://user-images.githubusercontent.com/23097763/42412171-4e419970-824a-11e8-8d84-f0f882a8c095.PNG)
+
+#### 405 Method Not Allowed
+![method_not_allowed](https://user-images.githubusercontent.com/23097763/42412160-4ac49400-824a-11e8-9a08-faf529f93410.PNG)
+
+#### 406 Not Acceptable
+![not_acceptable](https://user-images.githubusercontent.com/23097763/42412161-4af85fc4-824a-11e8-83a0-d5ebd070de37.PNG)
+
+#### 415 Unsupported Media Type
+![unsupported_media_type](https://user-images.githubusercontent.com/23097763/42412162-4b34e516-824a-11e8-8811-2edc812a872f.PNG)
+
