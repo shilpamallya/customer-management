@@ -55,6 +55,8 @@ The Customer Management mule project has been built by going through the Mulesof
       *   Client Id Enforcement policy is applied on the APIs to only allow authorized users from accessing the customer management application.
       *   Customer management application is deployed on CloudHub.
 
+### Usecases
+
 #### Usecase 1:
 
 *Problem Statement: A consumer may periodically (every 5 minutes) consume the API to enable the consumer to maintain a copy of the provider API's customers(the API represents the system of record).*
