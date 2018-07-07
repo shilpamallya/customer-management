@@ -85,6 +85,13 @@ The Customer Management mule project has been built by going through the Mulesof
    
 ### API Dictionary
 
+##### Client Application Credentials
+*Note: should be sent in header for every request.*
+
+**client_id** - 6433d0b931b24820ad8698e690e98009
+
+**client_secret** - 0148851a7Da84C1E9d66FccE2987B8fc
+
 | API Operation        | HTTP Method           | URL  |   Request   |  Response |  
 | :------------- |:-------------:| :-----|  :--------|   :----------|
 | List All Customers     | GET | https://customer-management-api-v1.us-e2.cloudhub.io/customer-management/v1/customers |    |   ``` [ { "id": 3, "salutation": "Ms", "firstName": "Kathy", "lastName": "Seirra", "address": { "addressLine1": "556", "addressLine2": "Pike Street", "suburb": "Sydney", "postCode": "2000", "state": "NSW", "country": "Australia" } }, { "id": 4, "salutation": "Ms", "firstName": "Kathy", "lastName": "Seirra", "address": { "addressLine1": "556", "addressLine2": "Pike Street", "suburb": "Sydney", "postCode": "2000", "state": "NSW", "country": "Australia" } } ] ```   
