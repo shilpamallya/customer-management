@@ -1,0 +1,30 @@
+[{
+    "id": 1,
+    "salutation": "Mr",
+    "firstName": "John",
+    "lastName": "Doe",
+    "address": 
+    {
+      "addressLine1": "12",
+      "addressLine2": "Oak way Street",
+      "suburb": "Cherrybrook",
+      "postCode": 2126,
+      "state": "NSW",
+      "country": "Australia"
+    }
+  },
+  {
+    "id": 1,
+    "salutation": "Mr",
+    "firstName": "John",
+    "lastName": "Doe",
+    "address": 
+    {
+      "addressLine1": "12",
+      "addressLine2": "Oak way Street",
+      "suburb": "Cherrybrook",
+      "postCode": 2126,
+      "state": "NSW",
+      "country": "Australia"
+    }
+  }]

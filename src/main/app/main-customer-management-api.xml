@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/apikit http://www.mulesoft.org/schema/mule/apikit/current/mule-apikit.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+    <flow name="customer-management-api-main">
+        <http:listener config-ref="customer-management-api-httpListenerConfig" path="${customer.management.https.path}/*" doc:name="HTTPS"/>
+        <apikit:router config-ref="customer-management-api-config" doc:name="APIkit Router"/>
+        <exception-strategy ref="error-handler-api-kit-exception" doc:name="Reference Exception Strategy"/>
+    </flow>
+    <flow name="customer-management-api-console">
+        <http:listener config-ref="customer-management-api-httpListenerConfig" path="${customer.management.https.path}/console/*" doc:name="HTTPS"/>
+        <apikit:console config-ref="customer-management-api-config" doc:name="APIkit Console"/>
+    </flow>
+    <flow name="put:/customers/{id}:application/json:customer-management-api-config">
+        <flow-ref name="customer-api-impl:/put-customer" doc:name="customer-api-impl:/put-customer"/>
+
+    </flow>
+    <flow name="delete:/customers/{id}:customer-management-api-config">
+        <flow-ref name="customer-api-impl:/delete-customer" doc:name="customer-api-impl:/delete-customer"/>
+
+    </flow>
+    <flow name="get:/customers:customer-management-api-config">
+        <flow-ref name="customer-api-impl:/get-customers" doc:name="customer-api-impl:/get-customers"/>
+
+    </flow>
+    <flow name="get:/customers/{id}:customer-management-api-config">
+        <flow-ref name="customer-api-impl:/get-customer-by-id" doc:name="customer-api-impl:/get-customer-by-id"/>
+
+    </flow>
+    <flow name="post:/customers:application/json:customer-management-api-config">
+        <flow-ref name="customer-api-impl:/post-customer" doc:name="customer-api-impl:/post-customer"/>
+
+    </flow>
+   </mule>

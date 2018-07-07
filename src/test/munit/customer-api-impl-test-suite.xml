@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:core="http://www.mulesoft.org/schema/mule/core" xmlns:mock="http://www.mulesoft.org/schema/mule/mock" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/mock/current/mule-mock.xsd">
+    <munit:config name="munit" doc:name="MUnit configuration"/>
+    <spring:beans>
+        <spring:import resource="classpath:implementation/customer-api-impl.xml"/>
+        <spring:import resource="classpath:globals/config.xml"/>
+        <spring:import resource="classpath:shared/error-handler.xml"/>
+    </spring:beans>
+    <context:property-placeholder location="properties/${mule.env}.properties"/>
+    <munit:test name="customer-api-impl-test-suite-customer-api-impl:/get-customer-by-id-error-Test" description="Test" >
+        
+        <set-variable variableName="id" value="#['1']" doc:name="Set Customer Id"/>
+        <flow-ref name="customer-api-impl:/get-customer-by-id" doc:name="Flow-ref to customer-api-impl:/get-customer-by-id"/>
+         <munit:assert-on-equals message="Customer Id 1 does not exist" expectedValue="#['{ &quot;message&quot;: &quot;Customer 1 does not exist.&quot; , &quot;code&quot;:&quot;404&quot;}']" actualValue="#[message.payloadAs(java.lang.String)]" doc:name="Assert Equals"/>
+    </munit:test>
+    <munit:test name="customer-api-impl-test-suite-customer-api-impl:/get-customer-by-idTest" description="Test" >
+        <mock:when messageProcessor=".*:.*" doc:name="Mock Invoke Get Customer Service">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Invoke Get Customer Service']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[]" mimeType="application/java"/>
+        </mock:when>
+        <mock:when messageProcessor=".*:.*" doc:name="Mock Object to JSON">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Object to JSON']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[getResource(&quot;examples/response/customer-instance-response.json&quot;).asString().replaceAll(&quot;\\s+&quot;,&quot;&quot;)]" mimeType="application/json"/>
+        </mock:when>
+        <set-variable variableName="id" value="#['1']" doc:name="Set Customer Id"/>
+        <flow-ref name="customer-api-impl:/get-customer-by-id" doc:name="Flow-ref to customer-api-impl:/get-customer-by-id"/>
+        <munit:assert-on-equals message="Return payload does not match for customer id 1" expectedValue="#[getResource(&quot;examples/response/customer-instance-response.json&quot;).asString().replaceAll(&quot;\\s+&quot;,&quot;&quot;)]" actualValue="#[message.payloadAs(java.lang.String).replaceAll(&quot;\\s+&quot;,&quot;&quot;)]" doc:name="Assert Equals"/>
+    </munit:test>
+    <munit:test name="customer-api-impl-test-suite-customer-api-impl:/put-customer-error-Test" description="Test" >
+        
+        <set-variable variableName="id" value="#['1']" doc:name="Set Customer Id"/>
+        <set-payload value="#[getResource(&quot;examples/request/customer-request.json&quot;).asString()]" mimeType="application/json" doc:name="Set Payload"/>
+        <flow-ref name="customer-api-impl:/put-customer" doc:name="Flow-ref to customer-api-impl:/put-customer"/>
+         <munit:assert-on-equals message="Customer Id 1 cannot be updated." expectedValue="#['{ &quot;message&quot;: &quot;Customer 1 does not exist.&quot; , &quot;code&quot;:&quot;404&quot;}']" actualValue="#[message.payloadAs(java.lang.String)]" doc:name="Assert Equals"/>
+    </munit:test>
+    <munit:test name="customer-api-impl-test-suite-customer-api-impl:/put-customerTest" description="Test" >
+        <mock:when messageProcessor=".*:.*" doc:name="Mock Invoke Update Customer Service">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Invoke Update Customer Service']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[]" mimeType="application/java"/>
+        </mock:when>
+        <mock:when messageProcessor=".*:.*" doc:name="Mock Object to JSON">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Object to JSON']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[getResource(&quot;examples/response/customer-instance-response.json&quot;).asString().replaceAll(&quot;\\s+&quot;,&quot;&quot;)]" mimeType="application/json"/>
+        </mock:when>
+        <set-variable variableName="id" value="#['1']" doc:name="Set Customer Id"/>
+        <set-payload value="#[getResource(&quot;examples/request/customer-request.json&quot;).asString()]" mimeType="application/json" doc:name="Set Payload"/>
+        <flow-ref name="customer-api-impl:/put-customer" doc:name="Flow-ref to customer-api-impl:/put-customer"/>
+        <munit:assert-on-equals message="Customer 1 could not be updated " expectedValue="#[getResource(&quot;examples/response/customer-instance-response.json&quot;).asString().replaceAll(&quot;\\s+&quot;,&quot;&quot;)]" actualValue="#[message.payloadAs(java.lang.String).replaceAll(&quot;\\s+&quot;,&quot;&quot;)]" doc:name="Assert Equals"/>
+    </munit:test>
+    <munit:test name="customer-api-impl-test-suite-customer-api-impl:/delete-customer-error-Test" description="Test" >       
+        <set-variable variableName="id" value="#['1']" doc:name="Set Customer Id"/>
+        <flow-ref name="customer-api-impl:/delete-customer" doc:name="Flow-ref to customer-api-impl:/delete-customer"/>
+         <munit:assert-on-equals message="Customer Id 1 cannot be updated." expectedValue="#['{ &quot;message&quot;: &quot;Customer 1 does not exist.&quot; , &quot;code&quot;:&quot;404&quot;}']" actualValue="#[message.payloadAs(java.lang.String)]" doc:name="Assert Equals"/>
+    </munit:test>
+    <munit:test name="customer-api-impl-test-suite-customer-api-impl:/delete-customerTest" description="Test" >
+        <mock:when messageProcessor=".*:.*" doc:name="Mock Invoke Delete Customer Service">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Invoke Delete Customer Service']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#['Customer 1 has been successfully deleted.']"/>
+        </mock:when>
+        <set-variable variableName="id" value="#['1']" doc:name="Set Customer Id"/>
+        <flow-ref name="customer-api-impl:/delete-customer" doc:name="Flow-ref to customer-api-impl:/delete-customer"/>
+        <munit:assert-on-equals expectedValue="#['{ &quot;message&quot;: &quot;Customer 1 has been successfully deleted.&quot; }']" actualValue="#[message.payloadAs(java.lang.String)]" doc:name="Assert Equals"/>
+    </munit:test>
+    <munit:test name="customer-api-impl-test-suite-customer-api-impl:/post-customer-500-error-Test" description="Test" >
+        <mock:when messageProcessor=".*:.*" doc:name="Mock Object to JSON">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Object to JSON']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[getResource(&quot;examples/response/customer-instance-response.json&quot;).asString().replaceAll(&quot;\\s+&quot;,&quot;&quot;)]"/>
+        </mock:when>
+        <set-variable variableName="id" value="#['1']" doc:name="Set Customer Id"/>
+        <set-payload value="&lt;root&gt;
+ &lt;address&gt;
+      &lt;addressLine1&gt;12&lt;/addressLine1&gt;
+      &lt;addressLine2&gt;Oak way Street&lt;/addressLine2&gt;
+      &lt;country&gt;Australia&lt;/country&gt;
+      &lt;postCode&gt;2126&lt;/postCode&gt;
+      &lt;state&gt;NSW&lt;/state&gt;
+      &lt;suburb&gt;Cherrybrook&lt;/suburb&gt;
+   &lt;/address&gt;
+   &lt;firstName&gt;John&lt;/firstName&gt;
+   &lt;lastName&gt;Doe&lt;/lastName&gt;
+   &lt;salutation&gt;Mr&lt;/salutation&gt;
+&lt;/root&gt;" mimeType="application/json" doc:name="Set Payload"/>
+        <flow-ref name="customer-api-impl:/post-customer" doc:name="Flow-ref to customer-api-impl:/post-customer"/>
+        <munit:assert-on-equals message="Customer could not be created." expectedValue="#['{ &quot;message&quot;: &quot;Internal Server Error&quot; }']" actualValue="#[message.payloadAs(java.lang.String)]" doc:name="Assert Equals"/>
+    </munit:test>
+    <munit:test name="customer-api-impl-test-suite-customer-api-impl:/post-customerTest" description="Test" >
+        <mock:when messageProcessor=".*:.*" doc:name="Mock Invoke Create Customer Service">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Invoke Create Customer Service']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[]" mimeType="application/java"/>
+        </mock:when>
+        <mock:when messageProcessor=".*:.*" doc:name="Mock Object to JSON">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Object to JSON']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[getResource(&quot;examples/response/customer-instance-response.json&quot;).asString().replaceAll(&quot;\\s+&quot;,&quot;&quot;)]"/>
+        </mock:when>
+        <set-variable variableName="id" value="#['1']" doc:name="Set Customer Id"/>
+        <set-payload value="#[getResource(&quot;examples/request/customer-request.json&quot;).asString()]" mimeType="application/json" doc:name="Set Payload"/>
+        <flow-ref name="customer-api-impl:/post-customer" doc:name="Flow-ref to customer-api-impl:/post-customer"/>
+        <munit:assert-on-equals message="Customer could not be created." expectedValue="#[getResource(&quot;examples/response/customer-instance-response.json&quot;).asString().replaceAll(&quot;\\s+&quot;,&quot;&quot;)]" actualValue="#[message.payloadAs(java.lang.String).replaceAll(&quot;\\s+&quot;,&quot;&quot;)]" doc:name="Assert Equals"/>
+    </munit:test>
+     
+    <munit:test name="customer-api-impl-test-suite-customer-api-impl:/get-customers-error-Test" description="Test" >
+        <flow-ref name="customer-api-impl:/get-customers" doc:name="Flow-ref to customer-api-impl:/get-customers"/>
+        <munit:assert-on-equals message="Return payload does not match for customer" expectedValue="#['{ &quot;message&quot;: &quot;No customers are found.&quot; , &quot;code&quot;:&quot;404&quot;}']" actualValue="#[message.payloadAs(java.lang.String)]" doc:name="Assert Equals"/>
+    </munit:test>
+    <munit:test name="customer-api-impl-test-suite-customer-api-impl:/get-customersTest" description="Test" >
+    	<mock:when messageProcessor=".*:.*" doc:name="Mock Invoke Get All Customers Service">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Invoke Get All Customers Service']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[]" mimeType="application/java"/>
+        </mock:when>
+        <mock:when messageProcessor=".*:.*" doc:name="Mock Object to JSON">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Object to JSON']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[getResource(&quot;examples/response/customer-collection-response.json&quot;).asString().replaceAll(&quot;\\s+&quot;,&quot;&quot;)]" mimeType="application/json"/>
+        </mock:when>
+        <flow-ref name="customer-api-impl:/get-customers" doc:name="Flow-ref to customer-api-impl:/get-customers"/>
+        <munit:assert-on-equals message="Return payload does not match for customer id 1" expectedValue="#[getResource(&quot;examples/response/customer-collection-response.json&quot;).asString().replaceAll(&quot;\\s+&quot;,&quot;&quot;)]" actualValue="#[message.payloadAs(java.lang.String).replaceAll(&quot;\\s+&quot;,&quot;&quot;)]" doc:name="Assert Equals"/>
+</munit:test>
+</mule>

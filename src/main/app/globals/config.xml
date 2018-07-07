@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:api-platform-gw="http://www.mulesoft.org/schema/mule/api-platform-gw" xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:context="http://www.springframework.org/schema/context" xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/apikit http://www.mulesoft.org/schema/mule/apikit/current/mule-apikit.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd
+http://www.mulesoft.org/schema/mule/api-platform-gw http://www.mulesoft.org/schema/mule/api-platform-gw/current/mule-api-platform-gw.xsd">
+  <http:listener-config name="customer-management-api-httpListenerConfig" host="${https.host}" port="${https.port}" doc:name="HTTP Listener Configuration" protocol="HTTPS">
+        <tls:context>
+            <tls:key-store type="jks" path="${https.keystore.path}" alias="${https.keystore.alias}" keyPassword="${https.keystore.password}" password="${https.keystore.password}"/>
+        </tls:context>
+    </http:listener-config>
+    <apikit:config name="customer-management-api-config" raml="customer-management-api.raml" consoleEnabled="false" doc:name="Router"/>
+    <context:property-placeholder location="properties/${mule.env}.properties"/>
+    <spring:beans>
+        <spring:bean id="customerService" name="customerService" class="com.mule.shilpa.service.CustomerService"/>
+        <spring:bean id="customerDao" name="customerDao" class="com.mule.shilpa.dao.CustomerDao"/>
+    </spring:beans>
+    <ee:object-store-caching-strategy name="In_Memory_Caching_Strategy" doc:name="Caching Strategy">
+        <in-memory-store name="in-memory-cache" maxEntries="${cache.max.entries}" entryTTL="${cache.entry.ttl}" expirationInterval="${cache.expiration.interval}"/>
+    </ee:object-store-caching-strategy>
+    
+</mule>

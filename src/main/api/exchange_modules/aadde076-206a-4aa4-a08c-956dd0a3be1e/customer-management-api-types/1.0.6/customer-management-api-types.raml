@@ -1,0 +1,47 @@
+#%RAML 1.0 Library
+usage: Customer Management API resource entity library
+
+#Customer resource type
+types:
+   
+  Customer: 
+    description: Customer entity
+    type: object
+    properties: 
+      id?:
+        description: Customer Id
+        type: integer
+      salutation?:
+        description: Customer's title name
+        type: string
+      firstName?: 
+        description: Customer's first name
+      lastName?:
+        description: Customer's last name
+      address?:
+        type: Address
+        description: Address structure for customer.
+
+#Address type       
+  Address:
+    description: Address type of Customer entity.
+    type: object
+    properties:
+      addressLine1:
+        description: Address Line 1
+        type: string
+      addressLine2?:
+        description: Address Line 2
+        type: string
+      suburb: 
+        description: Suburb
+        type: string
+      postCode: 
+        description: Post Code
+        type: number
+      state?:
+        description: State
+        type: string
+      country?:
+        description: Country
+        type: string

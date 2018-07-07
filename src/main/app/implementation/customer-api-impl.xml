@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+    <flow name="customer-api-impl:/put-customer">
+        <logger level="INFO" doc:name="INFO:Start Log" message="START: Update Customer."/>
+        <logger message="INPUT PAYLOAD: Update Customer #[payload]" level="DEBUG" doc:name="DEBUG:Log Payload"/>
+        <json:json-to-object-transformer returnClass="com.mule.shilpa.model.Customer" doc:name="JSON to Object"/>
+        <invoke object-ref="customerService" method="updateCustomer" methodArguments="#[flowVars.id], #[payload]" doc:name="Invoke Update Customer Service"/>
+        <json:object-to-json-transformer doc:name="Object to JSON" mimeType="application/json"/>
+        <logger message="RESPONSE: Update Customer #[payload]" level="DEBUG" doc:name="DEBUG:Log Response"/>
+        <logger level="INFO" doc:name="INFO:End Log" message="END: Update Customer."/>
+        <exception-strategy ref="error-handler-api-kit-exception" doc:name="Reference Exception Strategy"/>
+    </flow>
+    <flow name="customer-api-impl:/delete-customer">
+        <logger level="INFO" doc:name="INFO:Start Log" message="START: Delete Customer #[flowVars.id]."/>
+        <invoke object-ref="customerService" method="deleteCustomer" methodArguments="#[flowVars.id]" doc:name="Invoke Delete Customer Service"/>
+        <set-payload value="{ &quot;message&quot;: &quot;#[payload]&quot; }" doc:name="Set Payload"/>
+        <logger level="INFO" doc:name="INFO:End Log" message="END: Delete Customer #[flowVars.id]."/>
+        <exception-strategy ref="error-handler-api-kit-exception" doc:name="Reference Exception Strategy"/>
+    </flow>
+    <flow name="customer-api-impl:/get-customers">
+        <logger level="INFO" doc:name="INFO:Start Log" message="START: Get All Customers."/>
+        <ee:cache cachingStrategy-ref="In_Memory_Caching_Strategy" doc:name="Cache">
+            <invoke object-ref="customerService" method="getAllCustomers" doc:name="Invoke Get All Customers Service"/>
+            <logger message="Get All Customers: #[payload]" level="DEBUG" doc:name="DEBUG:Log Payload"/>
+        </ee:cache>
+        <json:object-to-json-transformer mimeType="application/json" doc:name="Object to JSON"/>
+        <logger message="RESPONSE: #[payload]" level="DEBUG" doc:name="DEBUG:Log Response"/>
+        <logger level="INFO" doc:name="INFO:End Log" message="END: Get All Customers."/>
+        <exception-strategy ref="error-handler-api-kit-exception" doc:name="Reference Exception Strategy"/>
+    </flow>
+    <flow name="customer-api-impl:/get-customer-by-id">
+        <logger level="INFO" doc:name="INFO:Start Log" message="START: Get Customer #[flowVars.id]"/>
+        <invoke object-ref="customerService" method="getCustomer" methodArguments="#[flowVars.id]" doc:name="Invoke Get Customer Service"/>
+        <logger message="Get Customer by Id payload - #[payload]" level="DEBUG" doc:name="DEBUG:Log Payload"/>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+        <logger message="RESPONSE: #[payload]" level="DEBUG" doc:name="DEBUG:Log Response"/>
+        <logger level="INFO" doc:name="INFO:End Log" message="START: Get Customer #[flowVars.id]"/>
+        <exception-strategy ref="error-handler-api-kit-exception" doc:name="Reference Exception Strategy"/>
+    </flow>
+    <flow name="customer-api-impl:/post-customer">
+        <logger level="INFO" doc:name="INFO:Start Log" message="START:Create new Customer."/>
+        <logger message="INPUT PAYLOAD: #[payload]" level="DEBUG" doc:name="DEBUG:Log Payload"/>
+        <json:json-to-object-transformer returnClass="com.mule.shilpa.model.Customer" doc:name="JSON to Object"/>
+        <invoke object-ref="customerService" method="createCustomer" methodArguments="#[payload]" doc:name="Invoke Create Customer Service"/>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+        <logger message="OUTPUT PAYLOAD:#[payload]" level="DEBUG" doc:name="DEBUG:Log Response"/>
+        <logger level="INFO" doc:name="INFO:End Log" message="END: Create new Customer."/>
+        <exception-strategy ref="error-handler-api-kit-exception" doc:name="Reference Exception Strategy"/>
+    </flow>
+</mule>

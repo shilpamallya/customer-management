@@ -1,0 +1,16 @@
+#%RAML 1.0 Trait
+usage: Use this trait for Client ID Enforcement
+
+#Adding client id and client secret as http headers to allow only authorized applications to access the APIs.
+
+headers: 
+  client_id:
+    type: string
+    required: true
+  client_secret:
+    type: string
+    required: true
+responses:
+  401:
+    description: |
+              Unauthorized.

@@ -1,0 +1,114 @@
+#%RAML 1.0
+baseUri: https://mocksvc.mulesoft.com/mocks/853576a0-daf9-4178-8b87-8a6ad9826f8a # baseUri: https://mocksvc.mulesoft.com/mocks/853576a0-daf9-4178-8b87-8a6ad9826f8a  
+title: customer-management-api
+version: 1.0
+
+mediaType: application/json
+
+#Common Behaviors
+traits: 
+  complaint: !include exchange_modules/aadde076-206a-4aa4-a08c-956dd0a3be1e/complaint-traits/1.0.1/complaint-traits.raml
+
+#Enforces Client id and Client Secret in the http header for all APIs.
+  clientIdEnforcement: !include exchange_modules/aadde076-206a-4aa4-a08c-956dd0a3be1e/client-id-enforcement/1.0.3/client-id-enforcement.raml
+
+#Resource entity information
+uses:
+  customerManagementApiTypes: exchange_modules/aadde076-206a-4aa4-a08c-956dd0a3be1e/customer-management-api-types/1.0.6/customer-management-api-types.raml
+
+#Defining collection and instance as two resource types to implement patterns found in the API.
+resourceTypes: 
+  collection:
+    usage: Use this resourceType to represent any collection of instances
+    description: A collection of <<resourcePathName>>
+    is: [complaint, clientIdEnforcement] 
+
+    get:
+      description: Get all <<resourcePathName>>
+      responses:
+       200:
+        description: contact details of the member
+        body: 
+          application/json:
+            type: <<typeName>>[]
+            example: <<exampleCollection>>
+
+    post:
+     description: Create a new <<resourcePathName|!singularize>>
+     body: 
+      application/json:
+        type: <<typeName>>
+        example: <<exampleRequest>>
+
+     responses: 
+      201:
+        description: Success response for creation of a new <<resourcePathName|!singularize>>
+        body:
+          application/json:
+            type: <<typeName>>
+            example: <<exampleInstance>>  
+  
+  
+  instance:
+    usage: Use this resourceType to represent any single instance
+    description: A single <<resourcePathName|!singularize>>
+    is: [complaint, clientIdEnforcement]
+
+    get: 
+      description: Retrieve the <<resourcePathName|!singularize>> detail
+      responses: 
+        200:
+          description: Success response of retrieving a <<resourcePathName|!singularize>>
+          body: 
+            application/json:
+              type: <<typeName>>
+              example: <<exampleInstance>>
+
+    put:
+      description: Update the <<resourcePathName|!singularize>> detail
+      body:
+        application/json:
+          type: <<typeName>>
+          example: <<exampleRequest>>
+      responses: 
+        200:
+          description: Success response of updating a <<resourcePathName|!singularize>>
+          body: 
+            application/json:
+              type: <<typeName>>
+              example: <<exampleInstance>>
+
+    delete:
+      description: Delete a <<resourcePathName|!singularize>> 
+      responses: 
+        200:
+          description: Success response of deleting a <<resourcePathName|!singularize>>
+          body:
+            application/json:
+              example: |
+                  { "message": "The <<resourcePathName|!singularize>> has been succesfully deleted." }
+
+#Applying collection resource type to the customers resource
+/customers:
+  type:  { collection:{typeName: customerManagementApiTypes.Customer, exampleCollection: !include examples/response/customer-collection-response.json, exampleInstance: !include examples/response/customer-instance-response.json, exampleRequest: !include examples/request/customer-request.json }} 
+
+#Applying instance resource type to the customers resource     
+  /{id}:
+    type: { instance:{typeName: customerManagementApiTypes.Customer, exampleInstance: !include examples/response/customer-instance-response.json, exampleRequest: !include examples/request/customer-request.json }}
+
+#We can apply collection resource type to the orders resource as following.
+#/orders:
+#  type: { collection:{typeName: orderManagementApiTypes.Order, exampleCollection: !include examples/response/order-collection-response.json, exampleInstance: !include examples/response/order-instance-response.json, exampleRequest: !include examples/request/order-request.json }}
+
+#We can apply instance resource type to the orders resource as following.
+#  /{id}:
+#    type: { instance:{typeName: orderManagementApiTypes.Order, exampleInstance: !include examples/response/order-instance-response.json, exampleRequest: !include examples/request/order-request.json }}
+
+#We can apply collection resource type to the products resource as following.
+#/products:
+#  type: { collection:{typeName: productManagementApiTypes.Product, exampleCollection: !include examples/response/product-collection-response.json, exampleInstance: !include examples/response/product-instance-response.json, exampleRequest: !include examples/request/product-request.json }}
+
+#We can apply instance resource type to the orders resource as following.
+#  /{id}:
+#    type: { instance:{typeName: productManagementApiTypes.Product, exampleInstance: !include examples/response/product-instance-response.json, exampleRequest: !include examples/request/product-request.json }}
+
