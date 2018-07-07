@@ -1,5 +1,5 @@
 
-# Customer Management Mule Application
+# Customer Management RESTful Mule Application
 
 ### Case Study Goal
 Design and build a RESTful API using RAML that contains a single resource customers. It should allow the following:
