@@ -14,7 +14,7 @@ http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee
 flowVars.errorMessage = exception.toString();
 }
 return payload;]]></expression-component>
-        <set-payload value="{ &quot;message&quot;: &quot;#[flowVars.errorMessage]&quot; , &quot;code&quot;:&quot;404&quot;}" doc:name="Set Payload"/>
+        <set-payload value="{ &quot;message&quot;: &quot;#[flowVars.errorMessage]&quot; , &quot;code&quot;:&quot;#[message.outboundProperties['http.status']]&quot;}" doc:name="Set Payload"/>
     </sub-flow>
  <apikit:mapping-exception-strategy name="error-handler-api-kit-exception">
         <apikit:mapping statusCode="400">
@@ -35,6 +35,7 @@ return payload;]]></expression-component>
         <apikit:mapping statusCode="404">
             <apikit:exception value="org.mule.module.apikit.exception.NotFoundException"/>
             <set-variable variableName="httpReason" value="#['Not Found']" doc:name="Set HTTP Reason"/>
+            <set-property propertyName="#['http.status']" value="#['404']" doc:name="Property"/>
             <flow-ref name="error-handler" doc:name="error-handler"/>
         </apikit:mapping>
         <apikit:mapping statusCode="405">
