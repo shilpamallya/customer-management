@@ -1,6 +1,15 @@
 
 # Customer Management RESTful Mule Application
 
+### Table of Contents
+**[Case Study Goal](#case-study-goal)**<br>
+**[Customer Management API](#customer-management-api)**<br>
+**[Mulesoft API Lifecycle](#mulesoft-api-lifecycle)**<br>
+**[Usecases](#usecases)**<br>
+**[API Dictionary](#api-dictionary)**<br>
+**[Snapshots](#snapshots)**<br>
+
+
 ### Case Study Goal
 Design and build a RESTful API using RAML that contains a single resource Customers. It should allow the following:
  
