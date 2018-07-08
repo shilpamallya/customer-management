@@ -8,6 +8,7 @@
 **[Usecases](#usecases)**<br>
 **[API Dictionary](#api-dictionary)**<br>
 **[Snapshots](#snapshots)**<br>
+**[Execution Steps](#snapshots)**<br>
 
 
 ### Case Study Goal
@@ -148,3 +149,9 @@ The Customer Management mule application has gone through the below stages of th
 #### 415 Unsupported Media Type
 ![unsupported_media_type](https://user-images.githubusercontent.com/23097763/42412162-4b34e516-824a-11e8-8811-2edc812a872f.PNG)
 
+
+### Execution Steps
+Step 1: Download the project from GitHub.<br>
+Step 2: Open command prompt and navigate to the pom.xml file in the project folder.<br>
+Step 3: Execute `mvn clean install`.<br>
+Step 4: Go to the browser and hit https://localhost:8092/customer-management/v1/console to view the API console.<br>
