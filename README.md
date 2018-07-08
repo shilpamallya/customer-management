@@ -30,12 +30,6 @@ This HTTPS-enabled mule application is deployed on CloudHub.
 
 Console URL - https://customer-management-api-v1.us-e2.cloudhub.io/customer-management/v1/console
 
-#### Client Application Credentials
-*Note: should be sent in header with every request.*
-
-**client_id** - 6433d0b931b24820ad8698e690e98009
-
-**client_secret** - 0148851a7Da84C1E9d66FccE2987B8fc
 
 ### Mulesoft API Lifecycle
 The Customer Management mule application has gone through the below stages of the API Lifecycle.
@@ -104,12 +98,6 @@ The Customer Management mule application has gone through the below stages of th
    
 ### API Dictionary
 
-##### Client Application Credentials
-*Note: should be sent in header with every request.*
-
-**client_id** - 6433d0b931b24820ad8698e690e98009
-
-**client_secret** - 0148851a7Da84C1E9d66FccE2987B8fc
 
 | API Operation        | HTTP Method           | URL  |   Request   |  Response |  
 | :------------- |:-------------:| :-----|  :--------|   :----------|
