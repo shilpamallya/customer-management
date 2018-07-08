@@ -6,6 +6,7 @@
 **[Customer Management API](#customer-management-api)**<br>
 **[Mulesoft API Lifecycle](#mulesoft-api-lifecycle)**<br>
 **[Usecases](#usecases)**<br>
+**[Scope of Improvement](#scope-of-improvement)**<br>
 **[API Dictionary](#api-dictionary)**<br>
 **[Snapshots](#snapshots)**<br>
 **[Execution Steps](#execution-steps)**<br>
@@ -91,6 +92,15 @@ The Customer Management mule application has gone through the below stages of th
    *  Parameter functions are used wherever a parameter is used in order to transform the expanded value of the parameter when it is processed in a resource definition.
    *  Modularized the RAML using 'include' by specifying the data types and examples value in an external file.
    *  Java implementation is modularized using the Model Class (POJO), Service and Data Access Object(DAO) layers. A Customer POJO, Customer Service and Customer DAO is used for managing a Customer resource. Similarly, this pattern can be repeated for Orders, Products and any other resources in the future.
+   
+### Scope of Improvement
+*   OAuth can be implemented for token-based authentication and authorization.
+*   Replace In-Memory Caching Strategy with a more suitable Caching Strategy.
+*   Richardson Maturity Model Level 3 - HATEOAS can be used.
+*   Pagination functionality can be implemented for retrieving list of customers.
+*   Integrate the application with a  system of record.
+*   Enable Auto-discovery on the APIs.
+*   Handle 304 Not Modified scenario.
    
 ### API Dictionary
 
