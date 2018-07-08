@@ -81,8 +81,8 @@ The Customer Management mule application has gone through the below stages of th
 
    *  JSON is chosen as the message format as it is light-weight and less-verbose.
    *  Build REST API's to adhere to level three of Richardson Maturity Model i.e., HATEOAS (Hypermedia As The Engine Of Application State). HATEOAS describes a RESTful system that returns hypermedia links with each response,  providing the consumer with options for subsequent API calls instead of sending a huge blob in a single response. Hypermedia links help guide consumers by providing options for further calls based on the current application state.
-   *  HTTP compression can be used to optimize compressing large responses.
-   *  A Caching Strategy can be implemented to reduce processing load and for quick responses.
+   *  Token-based authentication and authorization can be implemented using OAuth.
+   *  HTTP compression can be used to optimize compressing large responses thereby improving network efficiency. 
 
 #### Usecase 3:
 
