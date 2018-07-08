@@ -71,9 +71,8 @@ The Customer Management mule application has gone through the below stages of th
 
 *Problem Statement: A consumer may periodically (every 5 minutes) consume the API to enable the consumer to maintain a copy of the provider API's Customers (the API represents the system of record).*
 
-   *  As it is mentioned that there will be more frequent reads from the consumer of customer management API, a Caching Strategy has been implemented on Get All Customers (GET /customers) API. This will reduce processing load and will boost performance. 
-
-<<Thread Profiles>>
+   *  As it is mentioned that there will be more frequent reads from the consumer of customer management API, a Caching Strategy has been implemented on Get All Customers (GET /customers) API. This will reduce processing load and will boost performance.
+   *  The provider API has to send `Last-Modified` or `ETag` HTTP header in the response of the GET All Customers request. The consumer of the application should then send the subsequent GET requests with the `If-Modified-Since` or `If-None-Match` in the header. If the resource has not been modified, the provider API will respond with a HTTP `304 Not Modified` with empty body which means the consumer can use their cached copy.
 
 #### Usecase 2:
 
