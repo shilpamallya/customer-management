@@ -25,9 +25,15 @@ resourceTypes:
 
     get:
       description: Get all <<resourcePathName>>
+      queryParameters:
+        lastUpdated:
+          required: false
+          description: Fetch <<resourcePathName>> that were last updated since this timestamp.
+          type: string
+          example: 2018-07-08T23:00:30+11:00
       responses:
        200:
-        description: contact details of the member
+        description:  list of <<resourcePathName>>
         body: 
           application/json:
             type: <<typeName>>[]
