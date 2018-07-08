@@ -8,7 +8,7 @@
 **[Usecases](#usecases)**<br>
 **[API Dictionary](#api-dictionary)**<br>
 **[Snapshots](#snapshots)**<br>
-**[Execution Steps](#snapshots)**<br>
+**[Execution Steps](#execution-steps)**<br>
 
 
 ### Case Study Goal
