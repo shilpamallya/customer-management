@@ -2,7 +2,7 @@
 # Customer Management RESTful Mule Application
 
 ### Case Study Goal
-Design and build a RESTful API using RAML that contains a single resource customers. It should allow the following:
+Design and build a RESTful API using RAML that contains a single resource Customers. It should allow the following:
  
 1. List all Customers
 2.	Create a new Customer
@@ -10,9 +10,9 @@ Design and build a RESTful API using RAML that contains a single resource custom
 4.	Delete a Customer
  
 The API must be designed to support the following consumer use cases at a minimum:
-1.	A consumer may periodically (every 5 minutes) consume the API to enable the consumer to maintain a copy of the provider API's customers(the API represents the system of record).
-2.	A mobile application used by customer service representatives that uses the API to retrieve and update the customers details.
-3.	Simple extension of the API to support future resources such as orders and products.
+1.	A consumer may periodically (every 5 minutes) consume the API to enable the consumer to maintain a copy of the provider API's Customers (the API represents the system of record).
+2.	A mobile application used by customer service representatives that uses the API to retrieve and update the Customer's details.
+3.	Simple extension of the API to support future resources such as Orders and Products.
 
 ### Customer Management API
 This HTTPS-enabled mule application is deployed on CloudHub. 
@@ -20,54 +20,54 @@ This HTTPS-enabled mule application is deployed on CloudHub.
 Console URL - https://customer-management-api-v1.us-e2.cloudhub.io/customer-management/v1/console
 
 #### Client Application Credentials
-*Note: should be sent in header for every request.*
+*Note: should be sent in header with every request.*
 
 **client_id** - 6433d0b931b24820ad8698e690e98009
 
 **client_secret** - 0148851a7Da84C1E9d66FccE2987B8fc
 
 ### Mulesoft API Lifecycle
-The Customer Management mule project has been built by going through the Mulesoft API lifecycle as follows.
+The Customer Management mule application has gone through the below stages of the API Lifecycle.
 
 1. Design
       *  The design and writing of the API is done using RESTful API Modeling Language (RAML).
-      *  API Specification has been defined using RAML in Anypoint Platform Design Centre.
+      *  API Specification has been defined using RAML in Anypoint Design Centre.
       *  Resource types and traits features in RAML is extensively used to eliminate redundancies in resource and method definitions.
       *  Parameter functions are used wherever a parameter is used in order to transform the expanded value of the parameter when it is processed in a resource definition.
       *  Modularized the RAML using 'include' by specifying the data types and examples value in an external file.
 
 2. Implementation
-      *  A RESTful maven-based Mule application is developed.
-      *   Java implementation is modularized using the Service and Data Access Object(DAO) layers. 
-      *   A customer POJO is used for managing customer resource. 
-      *   A HashMap is used to store customers.
-      *   Standard project structure with proper naming conventions are followed.
-      *   Standard logging is implemented using appropriate log levels.
+      *   A RESTful maven-based Mule application is developed.
+      *   Java implementation is modularized using the Service and Data Access Object (DAO) layers. 
+      *   A customer POJO is used for managing Customer resource. 
+      *   A HashMap is used to store Customers.
+      *   A standardized project structure with proper naming conventions are followed.
+      *   A standardized logging is implemented using INFO and DEBUG log levels.
       *   Standard exception handling is implemented with uniform error message formats.
-      *   Externalized configurations using properties.
-      *   In-memory caching strategy is used for get all customers to improve performance.
+      *   Externalized configurations using global property file.
+      *   In-memory Caching Strategy is used for get all customers to improve performance.
       *   MUnit test cases are defined for positive and negative scenarios for maximum code coverage.
       *   Provided comments and java documentation wherever appropriate.
       *   Proper usage of built-in aspects of HTTP (status codes, headers etc).
 
 3. Management 
-      *   SSL/HTTPS enabled mule application for secure communications between client and server.
-      *   Client Id Enforcement policy is applied on the APIs to only allow authorized users from accessing the customer management application.
-      *   Customer management application is deployed on CloudHub.
+      *   SSL/HTTPS has been enabled on the application for secure communications between client and server.
+      *   Client Id Enforcement policy is applied on all API endpoints to only allow authorized users from accessing the customer management application.
+      *   The application is deployed on CloudHub.
 
 ### Usecases
 
 #### Usecase 1:
 
-*Problem Statement: A consumer may periodically (every 5 minutes) consume the API to enable the consumer to maintain a copy of the provider API's customers(the API represents the system of record).*
+*Problem Statement: A consumer may periodically (every 5 minutes) consume the API to enable the consumer to maintain a copy of the provider API's Customers (the API represents the system of record).*
 
-   *  As it is mentioned that there will be more frequent reads from the consumer of customer management API, a Caching Strategy has been implemented on get all customers (GET /customers) API. This will reduce processing load and will boost performance. 
+   *  As it is mentioned that there will be more frequent reads from the consumer of customer management API, a Caching Strategy has been implemented on Get All Customers (GET /customers) API. This will reduce processing load and will boost performance. 
 
 <<Thread Profiles>>
 
 #### Usecase 2:
 
-*Problem Statement: A mobile application used by customer service representatives that uses the API to retrieve and update the customers details.*
+*Problem Statement: A mobile application used by customer service representatives that uses the API to retrieve and update the customer's details.*
 
    *  JSON is chosen as the message format as it is light-weight and less-verbose.
    *  Build REST API's to adhere to level three of Richardson Maturity Model i.e., HATEOAS (Hypermedia As The Engine Of Application State). HATEOAS describes a RESTful system that returns hypermedia links with each response,  providing the consumer with options for subsequent API calls instead of sending a huge blob in a single response. Hypermedia links help guide consumers by providing options for further calls based on the current application state.
@@ -86,7 +86,7 @@ The Customer Management mule project has been built by going through the Mulesof
 ### API Dictionary
 
 ##### Client Application Credentials
-*Note: should be sent in header for every request.*
+*Note: should be sent in header with every request.*
 
 **client_id** - 6433d0b931b24820ad8698e690e98009
 
@@ -103,7 +103,7 @@ The Customer Management mule project has been built by going through the Mulesof
 
 ### Snapshots
 
-#### HTTPS enabled API Console
+#### HTTPS enabled Customer Management API Console
 ![1](https://user-images.githubusercontent.com/23097763/42412163-4b72e384-824a-11e8-895c-89dab37e96c3.png)
 
 #### Client Id Enforcement Policy
