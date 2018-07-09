@@ -68,6 +68,8 @@ The Customer Management mule application has gone through the below stages of th
 
    *  As there will be frequent reads from the consumer of customer management API, a Caching Strategy has been implemented on Get All Customers (GET /customers) API. This will reduce processing load and will boost performance.
    *  The provider API has to send `Last-Modified` or `ETag` HTTP header in the response of the GET All Customers request. The consumer of the application should then send the subsequent GET requests with the `If-Modified-Since` or `If-None-Match` in the header. If the resource has not been modified, the provider API will respond with a HTTP `304 Not Modified` with empty body which means the consumer can use their cached copy.
+   *  The provider API should encourage the storage of cacheable data to its consumer. The provider API response should indicate that the data can be stored up to a certain time by setting the `Expires` HTTP header or `Cache-Control` HTTP header with a directive that explicitly allows caching. In the cases where the data needs to be real-time, the provider API’s response should not be cached by the client. By enabling this critical constraint, we can greatly reduce the number of interactions with the provider API, reducing internal server usage.
+
 
 #### Usecase 2:
 
